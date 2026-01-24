@@ -1,26 +1,71 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+	/* base */
+	--background: oklch(0.985 0 0);
+	--foreground: oklch(0.205 0 0);
+
+	--card: oklch(0.99 0 0);
+	--card-foreground: oklch(0.205 0 0);
+
+	--muted: oklch(0.965 0 0);
+	--muted-foreground: oklch(0.52 0 0);
+
+	--border: oklch(0.91 0 0);
+	--input: oklch(0.91 0 0);
+
+	/* accent = “impulse” */
+	--primary: oklch(0.66 0.19 28);
+	--primary-foreground: oklch(0.98 0 0);
+
+	/* optional support tokens */
+	--secondary: oklch(0.965 0 0);
+	--secondary-foreground: oklch(0.28 0 0);
+
+	--accent: oklch(0.95 0.04 28);
+	--accent-foreground: oklch(0.25 0.02 28);
+
+	--destructive: oklch(0.62 0.24 25);
+	--destructive-foreground: oklch(0.98 0 0);
+
+	--ring: var(--primary);
+
+	--radius: 0.9rem;
+
+	/* typography */
+	--font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+	--font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+.dark {
+	--background: oklch(0.16 0 0);
+	--foreground: oklch(0.98 0 0);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+	--card: oklch(0.19 0 0);
+	--card-foreground: oklch(0.98 0 0);
+
+	--muted: oklch(0.24 0 0);
+	--muted-foreground: oklch(0.74 0 0);
+
+	--border: oklch(0.28 0 0);
+	--input: oklch(0.28 0 0);
+
+	--primary: oklch(0.72 0.2 28);
+	--primary-foreground: oklch(0.16 0 0);
+
+	--secondary: oklch(0.24 0 0);
+	--secondary-foreground: oklch(0.98 0 0);
+
+	--accent: oklch(0.27 0.05 28);
+	--accent-foreground: oklch(0.98 0 0);
+
+	--destructive: oklch(0.66 0.24 25);
+	--destructive-foreground: oklch(0.98 0 0);
+
+	--ring: var(--primary);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+	font-family: var(--font-sans);
 }
