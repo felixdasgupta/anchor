@@ -21,8 +21,9 @@ export function MonthlyLineChart() {
 
 	const data = useMemo(() => {
 		const now = new Date();
-		return Array.from({ length: 6 }, (_, index) => {
-			const monthDate = new Date(now.getFullYear(), now.getMonth() - (5 - index), 1);
+		return Array.from({ length: 7 }, (_, index) => {
+			const offset = index - 3;
+			const monthDate = new Date(now.getFullYear(), now.getMonth() + offset, 1);
 			const monthEnd = new Date(monthDate.getFullYear(), monthDate.getMonth() + 1, 0);
 			monthEnd.setHours(23, 59, 59, 999);
 
