@@ -11,6 +11,14 @@ const monthLabel = (date: Date) =>
 export function MonthlyLineChart() {
 	const purchases = useAtomValue(purchasesAtom);
 
+	if (purchases.length === 0) {
+		return (
+			<div className="flex h-60 w-full items-center justify-center rounded-lg border border-dashed text-sm text-neutral-500">
+				Log a purchase to see monthly trends.
+			</div>
+		);
+	}
+
 	const data = useMemo(() => {
 		const now = new Date();
 		return Array.from({ length: 6 }, (_, index) => {
