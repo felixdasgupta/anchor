@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { ConfirmDialog } from "@/components/common/ConfirmDialog";
 
 const formatDollars = (value: number) => (value / 100).toFixed(0);
 const parseDollars = (value: string) => {
@@ -35,9 +36,6 @@ export function SettingsView() {
 	}, [settings]);
 
 	const resetAll = () => {
-		if (!window.confirm("Reset all local data? This cannot be undone.")) {
-			return;
-		}
 		setSettings({ discretionaryBudgetCents: 0, weeklyLimitCents: 0 });
 		setPurchases([]);
 	};
@@ -98,9 +96,17 @@ export function SettingsView() {
 					<p className="text-sm text-neutral-600">
 						Clears stored purchases and settings on this device.
 					</p>
-					<Button className="mt-4" variant="destructive" onClick={resetAll}>
-						Reset local data
-					</Button>
+					<ConfirmDialog
+						trigger={
+							<Button className="mt-4" variant="destructive">
+								Reset local data
+							</Button>
+						}
+						title="Reset local data?"
+						description="This removes all purchases and settings stored on this device."
+						confirmLabel="Confirm reset"
+						onConfirm={resetAll}
+					/>
 				</CardContent>
 			</Card>
 		</div>
