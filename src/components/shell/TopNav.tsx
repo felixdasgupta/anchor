@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSetAtom } from "jotai";
 import { LayoutDashboard, History, Settings, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { logImpulseOpenAtom } from "@/stores/ui";
 
 type Props = { variant?: "default" | "cta" };
 
@@ -15,10 +17,14 @@ const navItems = [
 
 export function TopNav({ variant = "default" }: Props) {
 	const pathname = usePathname();
+	const setLogOpen = useSetAtom(logImpulseOpenAtom);
 
 	if (variant === "cta") {
 		return (
-			<Button className='gap-2 bg-linear-to-r from-orange-500 to-rose-500 text-white hover:from-orange-600 hover:to-rose-600'>
+			<Button
+				className='gap-2 bg-linear-to-r from-orange-500 to-rose-500 text-white hover:from-orange-600 hover:to-rose-600 cursor-pointer'
+				onClick={() => setLogOpen(true)}
+			>
 				<Zap className='h-4 w-4' />
 				Log Spend
 			</Button>

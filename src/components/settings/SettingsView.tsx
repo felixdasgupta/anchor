@@ -1,10 +1,13 @@
 "use client";
 
-import { useAtom } from "jotai";
+import { useEffect, useRef, useState } from "react";
+import { useAtom, useSetAtom } from "jotai";
 import { settingsAtom } from "@/stores/settings";
+import { purchasesAtom } from "@/stores/purchases";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 
 const formatDollars = (value: number) => (value / 100).toFixed(0);
 const parseDollars = (value: string) => {
@@ -17,6 +20,27 @@ const parseDollars = (value: string) => {
 
 export function SettingsView() {
 	const [settings, setSettings] = useAtom(settingsAtom);
+	const setPurchases = useSetAtom(purchasesAtom);
+	const [saved, setSaved] = useState(false);
+	const initial = useRef(true);
+
+	useEffect(() => {
+		if (initial.current) {
+			initial.current = false;
+			return;
+		}
+		setSaved(true);
+		const timeout = setTimeout(() => setSaved(false), 1500);
+		return () => clearTimeout(timeout);
+	}, [settings]);
+
+	const resetAll = () => {
+		if (!window.confirm("Reset all local data? This cannot be undone.")) {
+			return;
+		}
+		setSettings({ discretionaryBudgetCents: 0, weeklyLimitCents: 0 });
+		setPurchases([]);
+	};
 
 	return (
 		<div className="space-y-6">
@@ -27,7 +51,10 @@ export function SettingsView() {
 
 			<Card>
 				<CardHeader>
-					<CardTitle className="text-lg">Spending limits</CardTitle>
+					<div className="flex items-center justify-between">
+						<CardTitle className="text-lg">Spending limits</CardTitle>
+						{saved ? <span className="text-xs text-emerald-600">Saved</span> : null}
+					</div>
 				</CardHeader>
 				<CardContent className="grid gap-4">
 					<div className="grid gap-2">
@@ -60,6 +87,20 @@ export function SettingsView() {
 						/>
 						<p className="text-xs text-neutral-500">Soft cap to keep you on track.</p>
 					</div>
+				</CardContent>
+			</Card>
+
+			<Card>
+				<CardHeader>
+					<CardTitle className="text-lg">Reset</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<p className="text-sm text-neutral-600">
+						Clears stored purchases and settings on this device.
+					</p>
+					<Button className="mt-4" variant="destructive" onClick={resetAll}>
+						Reset local data
+					</Button>
 				</CardContent>
 			</Card>
 		</div>
