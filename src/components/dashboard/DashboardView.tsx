@@ -1,32 +1,30 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { KpiRow } from "@/components/dashboard/KpiRow";
+import { WeeklyBarChart } from "@/components/dashboard/WeeklyBarChart";
+import { MonthlyLineChart } from "@/components/dashboard/MonthlyLineChart";
+import { LogImpulseDialog } from "@/components/dashboard/LogImpulseDialog";
 
 export function DashboardView() {
 	return (
 		<div className='space-y-6'>
-			{/* KPI row placeholder */}
-			<div className='grid grid-cols-1 md:grid-cols-4 gap-4'>
-				{["This Week", "Weekly Limit", "This Month", "Projected/Month"].map((t) => (
-					<Card key={t}>
-						<CardHeader className='pb-2'>
-							<CardTitle className='text-sm text-neutral-600'>{t}</CardTitle>
-						</CardHeader>
-						<CardContent>
-							<div className='text-3xl text-neutral-900'>$—</div>
-							<div className='text-xs text-neutral-500 mt-1'>placeholder</div>
-						</CardContent>
-					</Card>
-				))}
+			<div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+				<div>
+					<h2 className="text-2xl font-semibold text-neutral-900">Dashboard</h2>
+					<p className="text-sm text-neutral-600">Track your weekly impulses at a glance.</p>
+				</div>
+				<LogImpulseDialog />
 			</div>
 
-			{/* Charts placeholders */}
+			<KpiRow />
+
 			<Card>
 				<CardHeader>
 					<CardTitle className='text-lg'>This Week&apos;s Spending</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<div className='h-60 rounded-lg bg-neutral-100' />
+					<WeeklyBarChart />
 				</CardContent>
 			</Card>
 
@@ -35,7 +33,7 @@ export function DashboardView() {
 					<CardTitle className='text-lg'>Monthly Trend</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<div className='h-60 rounded-lg bg-neutral-100' />
+					<MonthlyLineChart />
 				</CardContent>
 			</Card>
 		</div>

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
 import Profile from "./Profile";
@@ -14,7 +13,7 @@ export default function Login({ user }: LoginProps) {
 	return (
 		<div className='app-container'>
 			<div className='main-card-wrapper'>
-				<AnchorIcon className='h-6 w-6' />
+				<AnchorIcon className='h-16 w-16 text-white' />
 				<h1 className='main-title text-xl text-neutral-900 font-bold'>Anchor</h1>
 				<div className='action-card'>
 					{user ? (
