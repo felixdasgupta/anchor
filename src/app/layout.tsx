@@ -1,5 +1,7 @@
 import { ThemeProvider } from "@/components/theme-provider";
+import { Auth0Provider } from "@auth0/nextjs-auth0";
 import "./globals.css";
+import "@/components/login/login.css";
 import { Inter, Fraunces } from "next/font/google";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
@@ -9,7 +11,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang='en' suppressHydrationWarning className={`${inter.variable} ${fraunces.variable}`}>
 			<body>
-				<ThemeProvider>{children}</ThemeProvider>
+				<Auth0Provider>
+					<ThemeProvider>{children}</ThemeProvider>
+				</Auth0Provider>
 			</body>
 		</html>
 	);
