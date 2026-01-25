@@ -18,7 +18,7 @@ export function TopNav({ variant = "default" }: Props) {
 
 	if (variant === "cta") {
 		return (
-			<Button className='gap-2 bg-gradient-to-r from-orange-500 to-rose-500 text-white hover:from-orange-600 hover:to-rose-600'>
+			<Button className='gap-2 bg-linear-to-r from-orange-500 to-rose-500 text-white hover:from-orange-600 hover:to-rose-600'>
 				<Zap className='h-4 w-4' />
 				Log Spend
 			</Button>
