@@ -1,0 +1,86 @@
+flowchart LR
+  %% Anchor — Next.js App Architecture (Left → Right)
+  %% Rule: data & responsibility flow strictly LEFT → RIGHT
+
+  %% AUTH (GLOBAL)
+  AUTH0["Auth0 SDK<br/>(@auth0/nextjs-auth0)"]
+  AUTH_API["Auth Routes<br/>(app/api/auth/[auth0]/route.ts)<br/><b>SSR</b>"]
+  MW["Auth Middleware<br/>(middleware.ts)<br/><b>Edge</b><br/>Gates routes"]
+
+  AUTH0 --> AUTH_API
+  AUTH0 --> MW
+
+  %% ENTRY
+  ROOT["Root Layout<br/>(app/layout.tsx)<br/><b>SSR</b>"]
+  THEME["Globals + Theme<br/>(globals.css, ThemeProvider)"]
+  ROOT --> THEME
+
+  %% ROUTE GATING
+  MW --> ROOT
+
+  %% APP SHELL (PROTECTED AREA)
+  SHELL["App Shell<br/>(app/(app)/layout.tsx)<br/><b>SSR</b>"]
+  ROOT --> SHELL
+
+  TOPNAV["TopNav<br/><b>CSR</b>"]
+  MOBILENAV["MobileNav<br/><b>CSR</b>"]
+
+  SHELL --> TOPNAV
+  SHELL --> MOBILENAV
+
+  %% ROUTES
+  ROUTES["Route Slots<br/>(SSR wrappers only)"]
+  SHELL --> ROUTES
+
+  DASH_ROUTE["Dashboard Route<br/>(app/(app)/page.tsx)<br/><b>SSR</b>"]
+  HIST_ROUTE["History Route<br/>(/history)<br/><b>SSR</b>"]
+  SET_ROUTE["Settings Route<br/>(/settings)<br/><b>SSR</b>"]
+
+  ROUTES --> DASH_ROUTE
+  ROUTES --> HIST_ROUTE
+  ROUTES --> SET_ROUTE
+
+  %% VIEWS
+  DASH_VIEW["DashboardView<br/><b>CSR</b>"]
+  HIST_VIEW["HistoryView<br/><b>CSR</b>"]
+  SET_VIEW["SettingsView<br/><b>CSR</b>"]
+
+  DASH_ROUTE --> DASH_VIEW
+  HIST_ROUTE --> HIST_VIEW
+  SET_ROUTE --> SET_VIEW
+
+  %% DASHBOARD COMPOSITION
+  KPI["KPI Row"]
+  WEEKLY["Weekly Bar Chart"]
+  MONTHLY["Monthly Line Chart"]
+  LOG_TRIGGER["Log Impulse Trigger"]
+
+  DASH_VIEW --> KPI
+  DASH_VIEW --> WEEKLY
+  DASH_VIEW --> MONTHLY
+  DASH_VIEW --> LOG_TRIGGER
+
+  %% INTERACTIONS
+  LOG_DIALOG["LogImpulseDialog<br/><b>CSR</b>"]
+  LOG_TRIGGER --> LOG_DIALOG
+
+  %% CLIENT LOGIC
+  STORE["Jotai Store<br/>(src/stores/**)<br/><b>CSR only</b>"]
+  TYPES["Domain Types"]
+  UTILS["Utils<br/>(money, dates)"]
+
+  LOG_DIALOG --> STORE
+  KPI --> STORE
+  HIST_VIEW --> STORE
+
+  STORE --> TYPES
+  STORE --> UTILS
+
+  %% UI SYSTEM
+  UI["shadcn / Radix UI Components"]
+  KPI --> UI
+  WEEKLY --> UI
+  MONTHLY --> UI
+  LOG_DIALOG --> UI
+  TOPNAV --> UI
+  MOBILENAV --> UI

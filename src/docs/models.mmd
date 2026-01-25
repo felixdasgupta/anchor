@@ -1,0 +1,46 @@
+erDiagram
+  User ||--o{ ImpulseExpense : has
+  User ||--o{ BalanceSnapshot : has
+  User ||--|| Settings : has
+  User ||--o{ PlaidItem : has
+
+  User {
+    string id
+    string email
+  }
+
+  ImpulseExpense {
+    string id
+    string userId
+    int amountCents
+    string merchant
+    string category
+    date occurredAt
+    string note
+    string mood
+    string source
+    string plaidTransactionId
+  }
+
+  BalanceSnapshot {
+    string id
+    string userId
+    int balanceCents
+    date capturedAt
+    string source
+  }
+
+  Settings {
+    string userId
+    int discretionaryBudgetCents
+    int weeklyLimitCents
+  }
+
+  PlaidItem {
+    string id
+    string userId
+    string accessToken
+    string itemId
+    string institutionName
+    date createdAt
+  }
