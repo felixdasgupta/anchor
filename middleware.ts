@@ -6,7 +6,7 @@ export async function middleware(request: NextRequest) {
 	const response = await auth0.middleware(request);
 	const { pathname } = request.nextUrl;
 
-	if (pathname.startsWith("/api/auth")) {
+	if (pathname.startsWith("/auth")) {
 		return response;
 	}
 
@@ -19,5 +19,7 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-	matcher: ["/((?!api/auth|api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|login).*)"],
+	matcher: [
+		"/((?!auth|api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|login).*)",
+	],
 };

@@ -3,7 +3,7 @@ set -e
 
 APP_NAME="Anchor"
 BASE_URL="http://localhost:3000"
-CALLBACK_URL="${BASE_URL}/api/auth/callback"
+CALLBACK_URL="${BASE_URL}/auth/callback"
 LOGOUT_URL="${BASE_URL}"
 ORIGIN_URL="${BASE_URL}"
 
@@ -43,11 +43,11 @@ DOMAIN=$(auth0 tenants list --json | jq -r '.[] | select(.active == true) | .dom
 AUTH0_SECRET=$(openssl rand -hex 32)
 
 cat > .env.local <<EOF
-AUTH0_SECRET=${AUTH0_SECRET}
-AUTH0_BASE_URL=${BASE_URL}
-AUTH0_ISSUER_BASE_URL=https://${DOMAIN}
+AUTH0_DOMAIN=${DOMAIN}
 AUTH0_CLIENT_ID=${CLIENT_ID}
 AUTH0_CLIENT_SECRET=${CLIENT_SECRET}
+AUTH0_SECRET=${AUTH0_SECRET}
+APP_BASE_URL=${BASE_URL}
 EOF
 
 rm auth0-app.json
